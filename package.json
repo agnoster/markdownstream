@@ -1,0 +1,20 @@
+{
+  "name": "markdownstream",
+  "version": "0.0.1",
+  "description": "Streaming markdown parser that allows round-tripping and patching",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/agnoster/markdownstream.git"
+  },
+  "keywords": [
+    "markdown",
+    "streaming",
+    "parser"
+  ],
+  "author": "Isaac Wolkerstorfer <agnoster@gmail.com>",
+  "license": "MIT"
+}
