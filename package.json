@@ -4,7 +4,7 @@
   "description": "Streaming markdown parser that allows round-tripping and patching",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,8 @@
     "parser"
   ],
   "author": "Isaac Wolkerstorfer <agnoster@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tap": "*"
+  }
 }
