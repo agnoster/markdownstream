@@ -1,5 +1,5 @@
 var test = require('tap').test
-  , MarkdownStream = require('../')
+  , MarkdownStream = require('../lib/')
   , fs = require('fs')
   , fakeStream = require('./fakestream')
   , doc = fs.readFileSync('./test/test1.md', 'utf8')
