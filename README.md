@@ -2,6 +2,8 @@
 
 Streaming markdown parser that will allows round-tripping and patching
 
+## WARNING: Only for parsing code blocks currently
+
 Ever wanted to parse a markdown file, and *just* fix certain things? Like maybe extract all the code segments, or add numbering to the headers, or fix all the numberings of ordered lists?
 
 Well, now you can.
