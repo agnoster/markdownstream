@@ -1,4 +1,4 @@
-# Markdownstream
+# MarkDownStream [![build status](https://secure.travis-ci.org/agnoster/markdownstream.png)](http://travis-ci.org/agnoster/markdownstream)
 
 Streaming markdown parser that allows round-tripping and patching
 
