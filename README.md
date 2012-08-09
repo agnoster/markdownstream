@@ -6,6 +6,10 @@ Ever wanted to parse a markdown file, and *just* fix certain things? Like maybe 
 
 Well, now you can.
 
+    var MarkdownStream = require('markdownstream')
+    parse = new MarkdownStream
+    ... more to come ...
+
 ...
 
 Actually, right *now* you can't, because I'm still working on it.
