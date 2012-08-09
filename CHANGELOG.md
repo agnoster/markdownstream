@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.2
+
+* Added heading detection
+* New synchronous API for when a stream is overkill, and you just want an array of tokens
+
 ## 0.0.1
 
 * Pass-through of files as a read-write stream

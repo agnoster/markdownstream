@@ -1,6 +1,6 @@
 {
   "name": "markdownstream",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Streaming markdown parser that allows round-tripping and patching",
   "main": "lib/",
   "scripts": {
