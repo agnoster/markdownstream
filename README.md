@@ -14,10 +14,10 @@ Actually, right *now* you can't, because I'm still working on it.
 
 * Stream through a file
 * Capture all code blocks, both in raw and parsed form
+* Re-render code blocks, switch from fenced to unfenced
+* Automatically render code blocks as fenced if tags are given
 
-## Goals for 0.0.1:
+## What is planned
 
-* Read code blocks
-* Round-trip a file, manipulating *only* the code blocks
-* Expose a streaming API
-* Read headers
+* Detect and expose other chunk types (headers, lists, paragraphs, etc.)
+* Cleaner parsing
