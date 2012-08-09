@@ -93,3 +93,11 @@ test("can re-write code blocks", function(t) {
     parser.write("# Hello\n\n    foobar\n    test\n\nThat's that!\n")
     parser.end()
 })
+
+test("can operate synchronously", function(t) {
+
+    var output = MarkdownStream.sync(doc)
+
+    t.equal(output.join(''), doc)
+    t.end()
+})
