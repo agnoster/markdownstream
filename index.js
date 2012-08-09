@@ -8,17 +8,15 @@ function lex(buffer, ctx, cb) {
 
         found = false
 
-        if (ctx.fenced_code) {
+        if (ctx.fcode) {
 
             buffer = buffer.replace(lex.code_fence, function(data, content) {
 
                 found = true
                 ctx.data += data
-                cb(ctx.data, { token: "fenced_code", content: ctx.content })
+                cb(ctx.data, { token: "fenced_code", content: ctx.fcode.content, tags: ctx.fcode.tags })
 
-                ctx.fenced_code = null
-                ctx.data = null
-                ctx.content = null
+                ctx.fcode = null
 
                 return ''
             })
@@ -27,17 +25,60 @@ function lex(buffer, ctx, cb) {
             buffer = buffer.replace(lex.other, function(data) {
 
                 found = true
-                ctx.content += data
+                ctx.fcode.content += data
                 ctx.data += data
                 return ''
             })
             continue;
         }
 
+        if (ctx.code) {
+                
+            buffer = buffer.replace(lex.codeblock, function(data, content) {
+                
+                if (ctx.code.blanks.length > 0) {
+                    
+                    ctx.code.content += Array(ctx.code.blanks.length + 1).join("\n")
+                    ctx.data += ctx.code.blanks.join('')
+                    ctx.code.blanks = []
+                }
+
+                found = true
+                ctx.code.content += content
+                ctx.data += data
+                return ''
+            })
+            if (found) continue
+
+            buffer = buffer.replace(lex.blankline, function(data, content) {
+                
+                found = true
+                ctx.code.blanks.push(data)
+                return ''
+            })
+            if (found) continue
+
+            if (buffer.match(/\n/)) { // not code!
+
+                cb(ctx.data, { token: "code_block", content: ctx.code.content })
+                if (ctx.code.blanks) {
+                    
+                    cb(ctx.code.blanks.join(''), { token: "blank" })
+                }
+
+                ctx.data = ''
+                ctx.code = null
+            } else {
+
+                continue;
+            }
+        }
+
         buffer = buffer.replace(lex.codeblock, function(data, content) {
 
             found = true
-            cb(data, { token: "codeblock", content: content })
+            ctx.data = data
+            ctx.code = { content: content, blanks: [] }
             return ''
         })
         if (found) continue
@@ -45,10 +86,8 @@ function lex(buffer, ctx, cb) {
         buffer = buffer.replace(lex.code_fence, function(data, content) {
 
             found = true
-            ctx.fenced_code = true
-            ctx.content = ''
+            ctx.fcode = { content: '', tags: content }
             ctx.data = data
-            ctx.code_tags = content
             return ''
         })
         if (found) continue
@@ -68,6 +107,7 @@ function lex(buffer, ctx, cb) {
 lex.code_fence = /^```([^\n]*)\n/
 lex.codeblock = /^    ([^\n]*\n)/
 lex.other = /^.*\n/
+lex.blankline = /^[ \t]*\n/
 
 function MarkdownStream(options) {
 

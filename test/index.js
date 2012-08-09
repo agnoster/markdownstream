@@ -2,7 +2,7 @@ var test = require('tap').test
   , MarkdownStream = require('../')
   , fs = require('fs')
   , fakeStream = require('./fakestream')
-  , doc = fs.readFileSync('./README.md', 'utf8')
+  , doc = fs.readFileSync('./test/test1.md', 'utf8')
 
 test("can round-trip a markdown document", function(t) {
 
@@ -27,17 +27,20 @@ test("can emit events for a code block", function(t) {
       , input = new fakeStream.readable(doc, 10, 10)
       , output = new fakeStream.writable
       , buffer = ''
-      , code = ''
+      , code = []
+      , codeparsed = []
+      , fcode = []
 
     input.pipe(parser)
     parser.on('data', function(data, metadata) {
         
         buffer += data
-        if (metadata.token == 'codeblock') {
-            code += data
+        if (metadata.token == 'code_block') {
+            code.push(data)
+            codeparsed.push(metadata.content)
         }
         if (metadata.token == 'fenced_code') {
-            console.log(metadata, data)
+            fcode.push(metadata)
         }
         output.write(data)
     })
@@ -47,7 +50,10 @@ test("can emit events for a code block", function(t) {
         output.end()
         t.equal(buffer, doc, "Buffer should be unchanged")
         t.equal(output.output, doc, "Output should be unchanged")
-        t.equal(code, "    var MarkdownStream = require('markdownstream')\n    parse = new MarkdownStream\n    ... more to come ...\n", "Should get the code")
+        t.deepEqual(code, ["    IC1\n    IC1\n\n    IC1\n", "    \n    IC2\n    \n"])
+        t.deepEqual(codeparsed, ["IC1\nIC1\n\nIC1\n", "\nIC2\n\n"])
+        t.deepEqual(fcode, [{ token: 'fenced_code', content: 'FC1\n\nFC1\n\n', tags: '' }
+                       ,{ token: 'fenced_code', content: 'FC2\nFC2\n\n    FC2\n', tags: 'foo' }])
         t.end()
     })
 
