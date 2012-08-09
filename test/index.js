@@ -35,12 +35,13 @@ test("can emit events for a code block", function(t) {
     parser.on('data', function(chunk) {
         
         buffer += chunk
-        if (chunk.type == 'code_block' && !chunk.fenced) {
-            code.push(chunk.toString())
-            codeparsed.push(chunk.content)
-        }
-        if (chunk.type == 'code_block' && chunk.fenced) {
-            fcode.push(chunk.toString())
+
+        if (chunk.type == 'code_block') {
+            if (chunk.fenced)
+                fcode.push(chunk.toString())
+            else
+                code.push(chunk.toString())
+
             codeparsed.push(chunk.content)
         }
         output.write(chunk)
@@ -70,11 +71,9 @@ test("can re-write code blocks", function(t) {
         if (chunk.type == 'code_block') {
             
             chunk.tags = 'foo'
-            output += chunk.render()
-        } else {
-
-            output += chunk.toString()
+            chunk.refresh()
         }
+        output += chunk.toString()
     })
 
     parser.on('end', function() {
