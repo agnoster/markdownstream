@@ -14,7 +14,7 @@ function lex(buffer, ctx, cb) {
 
                 found = true
                 ctx.data += data
-                cb(ctx.data, { token: "fenced_code", content: ctx.fcode.content, tags: ctx.fcode.tags })
+                cb(ctx.data, { token: "code_block", fenced: true, content: ctx.fcode.content, tags: ctx.fcode.tags })
 
                 ctx.fcode = null
 

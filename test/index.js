@@ -35,11 +35,11 @@ test("can emit events for a code block", function(t) {
     parser.on('data', function(data, metadata) {
         
         buffer += data
-        if (metadata.token == 'code_block') {
+        if (metadata.token == 'code_block' && !metadata.fenced) {
             code.push(data)
             codeparsed.push(metadata.content)
         }
-        if (metadata.token == 'fenced_code') {
+        if (metadata.token == 'code_block' && metadata.fenced) {
             fcode.push(metadata)
         }
         output.write(data)
@@ -52,8 +52,8 @@ test("can emit events for a code block", function(t) {
         t.equal(output.output, doc, "Output should be unchanged")
         t.deepEqual(code, ["    IC1\n    IC1\n\n    IC1\n", "    \n    IC2\n    \n"])
         t.deepEqual(codeparsed, ["IC1\nIC1\n\nIC1\n", "\nIC2\n\n"])
-        t.deepEqual(fcode, [{ token: 'fenced_code', content: 'FC1\n\nFC1\n\n', tags: '' }
-                       ,{ token: 'fenced_code', content: 'FC2\nFC2\n\n    FC2\n', tags: 'foo' }])
+        t.deepEqual(fcode, [{ token: 'code_block', content: 'FC1\n\nFC1\n\n', tags: '', fenced: true }
+                       ,{ token: 'code_block', content: 'FC2\nFC2\n\n    FC2\n', tags: 'foo', fenced: true }])
         t.end()
     })
 
