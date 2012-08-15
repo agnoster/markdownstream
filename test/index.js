@@ -61,7 +61,7 @@ test("can emit events for a code block", function(t) {
         t.equal(output.output, doc, "Output should be unchanged")
         t.deepEqual(code, ["    IC1\n    IC1\n\n    IC1\n", "    \n    IC2\n    \n"])
         t.deepEqual(fcode, ["```\nFC1\n\nFC1\n\n```\n", "```foo\nFC2\nFC2\n\n    FC2\n```\n"])
-        t.deepEqual(codeparsed, ["IC1\nIC1\n\nIC1\n", "\nIC2\n\n", "FC1\n\nFC1\n\n", "FC2\nFC2\n\n    FC2\n"])
+        t.deepEqual(codeparsed, ["IC1\nIC1\n\nIC1\n", "FC1\n\nFC1\n\n", "FC2\nFC2\n\n    FC2\n", "\nIC2\n\n"])
         t.deepEqual(headings, ["H11", "H21", "H12"])
         t.end()
     })
