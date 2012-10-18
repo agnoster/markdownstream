@@ -101,3 +101,15 @@ test("can operate synchronously", function(t) {
     t.equal(output.join(''), doc)
     t.end()
 })
+
+test("can report the line a token was found on", function(t) {
+  var tokens = MarkdownStream.sync(doc)
+    , lines = []
+
+  tokens.forEach(function(token){
+    if (token.type == 'code_block') lines.push(token.line)
+  })
+
+  t.deepEqual(lines, [7, 15, 24, 37])
+  t.end()
+})
