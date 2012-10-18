@@ -34,7 +34,7 @@ test("can emit events for a code block", function(t) {
 
     input.pipe(parser)
     parser.on('data', function(chunk) {
-        
+
         buffer += chunk
 
         if (chunk.type == 'code_block') {
@@ -47,7 +47,7 @@ test("can emit events for a code block", function(t) {
         }
 
         if (chunk.type == 'heading') {
-            
+
             headings.push(chunk.content)
         }
 
@@ -77,7 +77,7 @@ test("can re-write code blocks", function(t) {
     parser.on('data', function(chunk) {
 
         if (chunk.type == 'code_block') {
-            
+
             chunk.tags = 'foo'
             chunk.refresh()
         }
@@ -89,7 +89,7 @@ test("can re-write code blocks", function(t) {
         t.equal(output, "# Hello\n\n```foo\nfoobar\ntest\n```\n\nThat's that!\n")
         t.end()
     })
-    
+
     parser.write("# Hello\n\n    foobar\n    test\n\nThat's that!\n")
     parser.end()
 })
