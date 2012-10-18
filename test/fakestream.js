@@ -7,7 +7,7 @@ function FakeReadableStream(buffer, chunkSize, interval) {
     this.interval = interval
 }
 
-FakeReadableStream.prototype = new stream
+FakeReadableStream.prototype = new stream()
 
 FakeReadableStream.prototype.pause = function() {
 
@@ -37,7 +37,7 @@ function FakeWritableStream(options) {
     this.output = ''
 }
 
-FakeWritableStream.prototype = new stream
+FakeWritableStream.prototype = new stream()
 
 FakeWritableStream.prototype.end = function(data) {
 

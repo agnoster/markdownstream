@@ -6,9 +6,9 @@ var test = require('tap').test
 
 test("can round-trip a markdown document", function(t) {
 
-    var parser = new MarkdownStream
+    var parser = new MarkdownStream()
       , input = new fakeStream.readable(doc, 10, 10)
-      , output = new fakeStream.writable
+      , output = new fakeStream.writable()
 
     input.pipe(parser).pipe(output)
 
@@ -23,9 +23,9 @@ test("can round-trip a markdown document", function(t) {
 
 test("can emit events for a code block", function(t) {
 
-    var parser = new MarkdownStream
+    var parser = new MarkdownStream()
       , input = new fakeStream.readable(doc, 10, 10)
-      , output = new fakeStream.writable
+      , output = new fakeStream.writable()
       , buffer = ''
       , code = []
       , codeparsed = []
@@ -71,7 +71,7 @@ test("can emit events for a code block", function(t) {
 
 test("can re-write code blocks", function(t) {
 
-    var parser = new MarkdownStream
+    var parser = new MarkdownStream()
       , output = ''
 
     parser.on('data', function(chunk) {
