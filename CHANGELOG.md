@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.3
+
+* Added token.line property to determine which line the token was found on
+* Internal cleanup around the Lexer
+
 ## 0.0.2
 
 * Added heading detection
